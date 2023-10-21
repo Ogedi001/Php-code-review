@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>mysql.php file</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,13 +18,80 @@
     <!-- place navbar here -->
   </header>
 <?php
+$server = 'localhost';
+$DbUsername = 'root';
+$Dbpassword = '';
+$database = 'LOGINAPP';
+
+// Create a connection to the MySQL server
+// $connection = mysqli_connect($server, $DbUsername, $Dbpassword);
+
+// // Check if the connection to the MySQL server was successful
+// if (!$connection) {
+//   //die() terminate script , use for error handling and debugging
+//   die("Connection to MySQL failed: " . mysqli_connect_error());
+// } else {
+//   echo ('Connected to MySQL server');
+// }
+
+//you can connect to an existing database
+ $connection = mysqli_connect($server,$DbUsername,$Dbpassword,$database);
+ if (!$connection) {
+  //die() terminate script , use for error handling and debugging
+  die('Mysql DB Connection failed: '. mysqli_connect_error() );
+ }else {
+  echo('Mysql DB connected sucessfully');
+ };
+
+//you can also connect to specific 
+// Create a connection to the MySQL server with a custom port
+//$connection = mysqli_connect($server, $DbUsername, $Dbpassword, $database, $port);
+
+
 if (isset($_POST['submit'])) {
- $username = $_POST['username'];
- $password = $_POST['password'];
- echo $username .' and '.$password;
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+// Create database
+// $query = 'CREATE DATABASE CustomerDB';
+// if (!mysqli_query($connection, $query)){
+//   die('CustomerDB creation failed: '.mysqli_connect_error() );
+// };
+// echo 'CustomerDb created successfully';
+
+//create table
+// NOT NULL - Each row must contain a value for that column, null values are not allowed
+// DEFAULT value - Set a default value that is added when no other value is passed
+// UNSIGNED - Used for number types, limits the stored data to positive numbers and zero
+// AUTO INCREMENT - MySQL automatically increases the value of the field by 1 each time a new record is added
+// PRIMARY KEY - Used to uniquely identify the rows in a table. The column with PRIMARY KEY setting is often an ID number, and is often used with AUTO_INCREMENT
+// $query = 'CREATE TABLE myGuest(
+//   customerID int(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+//   username varchar(12) NOT NULL,
+//   password varchar(12) NOT NULL
+// )';
+ 
+//  if (!mysqli_query($connection,$query)) {
+//   //mysqli_connect_error() function is used to obtain errors related to database connection issues
+//  // mysqli_error($connection) function returns the error message specific to the last MySQL operation performed using the given database connection
+//   die('cannot create customer table: '. mysqli_error($connection));
+//  }
+//  echo 'Customer table created succesfully';
+
+$insertQuery ="INSERT INTO myGuest(username,password)
+VALUES('$username','$password')";
+ 
+ if (!mysqli_query($connection,$insertQuery)) {
+  die('Table data not inserted: '.mysqli_error($connection));
+ }
+ echo '<br/>table data inserted sucessfully';
+
 };
 
+// Close the MySQL connection
+mysqli_close($connection);
 ?>
+
 
   <main>
     <div class="container">
