@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>mysql.php file</title>
+  <title>myql Create customer</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -78,6 +78,8 @@ if (isset($_POST['submit'])) {
 //  }
 //  echo 'Customer table created succesfully';
 
+
+//insert into database
 $insertQuery ="INSERT INTO myGuest(username,password)
 VALUES('$username','$password')";
  
@@ -85,8 +87,14 @@ VALUES('$username','$password')";
   die('Table data not inserted: '.mysqli_error($connection));
  }
  echo '<br/>table data inserted sucessfully';
+ //get last inserted ID
+$last_isert_id = mysqli_insert_id($connection);
+echo 'new record created, last id: '.$last_isert_id;
 
-};
+
+ };
+
+
 
 // Close the MySQL connection
 mysqli_close($connection);
