@@ -52,6 +52,13 @@ if (isset($_POST['submit'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
+
+  
+//AAlways protect input fields from sql injection 
+$username = mysqli_real_escape_string($connection,$username);
+$password = mysqli_real_escape_string($connection,$password);
+
+
 // Create database
 // $query = 'CREATE DATABASE CustomerDB';
 // if (!mysqli_query($connection, $query)){

@@ -21,6 +21,11 @@ function UpdateCustomerInfo() {
     global $connection;
 $username = $_POST['username'];
 $password = $_POST['password'];
+
+//AAlways protect input fields from sql injection 
+$username = mysqli_real_escape_string($connection,$username);
+$password = mysqli_real_escape_string($connection,$password);
+
 $id = $_POST['id'];
 
 $query = "UPDATE myGuest ";
